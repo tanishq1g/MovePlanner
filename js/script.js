@@ -39,6 +39,23 @@ function loadData() {
     }).error(function(e){
         $('#nytimes-header').text('New York Times articles could not be found . ');
     });
+
+
+    var wikiurl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + city + '&format=json&callback=wikiCallback';
+
+    $.ajax({
+        url: wikiurl,
+        dataType : 'jsonp',
+        success: function(response){
+            var articleList = response[1];
+            for (let i = 0,len = articleList.length; i < len; i++){
+                article = articleList[i];
+                var url = 'http://en.wikipedia.org/wiki/' + article ;
+                $('#wikipedia-links').append('<li><a href="' + url + '">' + article + '</a></li>');
+            }
+        }
+    });
+
     return false;
 };
 
