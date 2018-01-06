@@ -24,6 +24,19 @@ function loadData() {
     var streetviewurl = 'https://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '?';
 
     $('body').append('<img class="bgimg" src="' + streetviewurl + '">');
+
+
+
+    var nytimesurl = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + city + '&sort=newest&api-key=6bee3e0117e04d80b5ef820e9911a528';
+
+    $.getJSON(nytimesurl, function(data){
+        $('#nytimes-header').text('New York Articles About ', city);
+        articles = data.response.docs;
+        for (let i = 0,len = articles.length; i < len; i++) {
+            var article = articles[i];
+            $('#nytimes-articles').append('<li class="article"><a href="' + article.web_url + '">' + article.headline.main + "</a>" + '<p>' + article.snippet + '</p></li>');
+        }
+    });
     return false;
 };
 
