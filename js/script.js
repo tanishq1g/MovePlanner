@@ -36,6 +36,8 @@ function loadData() {
             var article = articles[i];
             $('#nytimes-articles').append('<li class="article"><a href="' + article.web_url + '">' + article.headline.main + "</a>" + '<p>' + article.snippet + '</p></li>');
         }
+    }).error(function(e){
+        $('#nytimes-header').text('New York Times articles could not be found . ');
     });
     return false;
 };
